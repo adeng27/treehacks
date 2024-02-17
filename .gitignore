@@ -4,6 +4,7 @@
 .ipynb_checkpoints/
 xd.txt
 parserDev.ipynb
+output_file.csv
 
 # dependencies
 /node_modules
