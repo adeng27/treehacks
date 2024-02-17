@@ -1,15 +1,26 @@
 "use client"
 
-import { useAction } from "convex/react";
+import { useAction, useQuery } from "convex/react";
 import { useState } from "react";
 import { api } from "../../convex/_generated/api";
 
 export default function Home() {
   const handleMessage = useAction(api.chat.handleMessage);
+  const entries = useQuery(api.chat.getAllEntries);
   const [message, setMessage] = useState("");
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
+      <div>
+        {entries?.map(entry => {
+          return (
+            <div key={entry._id}>
+              <p>You: {entry.input}</p>
+              <p>AI: {entry.response}</p>
+            </div>
+          )
+        })}
+      </div>
       <form onSubmit={(e) => {
         e.preventDefault();
         handleMessage({ message });

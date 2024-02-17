@@ -15,6 +15,7 @@ import type {
   FunctionReference,
 } from "convex/server";
 import type * as chat from "../chat.js";
+import type * as lib_openai from "../lib/openai.js";
 
 /**
  * A utility for referencing Convex functions in your app's API.
@@ -26,6 +27,7 @@ import type * as chat from "../chat.js";
  */
 declare const fullApi: ApiFromModules<{
   chat: typeof chat;
+  "lib/openai": typeof lib_openai;
 }>;
 export declare const api: FilterApi<
   typeof fullApi,
