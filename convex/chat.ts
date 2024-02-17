@@ -2,7 +2,6 @@ import { v } from "convex/values";
 import { action, mutation, query } from "./_generated/server";
 import openai from "./lib/openai";
 import { api } from "./_generated/api";
-import { GenericQueryCtx } from "convex/server";
 
 export const handleMessage = action({
     args: {

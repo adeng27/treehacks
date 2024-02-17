@@ -6,6 +6,7 @@ import { api } from "../../convex/_generated/api";
 
 export default function Home() {
   const handleMessage = useAction(api.chat.handleMessage);
+  const insertMyRealMessage = useAction(api.realMessage.handleMessageSubmit);
   const entries = useQuery(api.chat.getAllEntries);
   const [message, setMessage] = useState("");
 
@@ -24,6 +25,7 @@ export default function Home() {
       <form onSubmit={(e) => {
         e.preventDefault();
         handleMessage({ message });
+        setMessage("");
       }}>
         <input
           className="text-black"
@@ -33,6 +35,11 @@ export default function Home() {
         />
         <button>SUBMIT</button>
       </form>
+      <button onClick={() => {
+        insertMyRealMessage({ fromTarget: false, content: "What is your favorite color?", timeStamp: BigInt(123) })
+      }}>
+        CLICK ME IF YOU DARE
+      </button>
     </main>
   );
 }
