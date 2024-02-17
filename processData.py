@@ -1,6 +1,6 @@
+import pandas as pd
+import re
 def processCsv(f_path, numb, output_path):
-    import pandas as pd
-    import re
 
     # Read the contents of the file
     file_path = f_path
@@ -89,24 +89,26 @@ def processCsv(f_path, numb, output_path):
     # Print the combined and sorted DataFrame
     comb.to_csv(output_path)
 
-from flask import Flask, request, jsonify
+# from flask import Flask, request, jsonify
 
-app = Flask(__name__)
+# app = Flask(__name__)
 
-@app.route('/run-python-function', methods=['POST'])
-def run_python_function():
-    data = request.json  # Extract input data from JSON body of the HTTP request
-    file_path = data['file_path']  # Access specific input parameter
-    number = data['number']
+# @app.route('/run-python-function', methods=['POST'])
+# def run_python_function():
+#     data = request.json  # Extract input data from JSON body of the HTTP request
+#     file_path = data['file_path']  # Access specific input parameter
+#     number = data['number']
     
-    # Call your Python function with the received input
-    result = processCsv(file_path, number, "output_file")
+#     # Call your Python function with the received input
+#     result = processCsv(file_path, number, "output_file")
     
-    return jsonify(result=result)  # Return result as JSON response
+#     return jsonify(result=result)  # Return result as JSON response
 
-def your_python_function(input_parameter):
-    # Your Python function logic here
-    return processed_result
+# def your_python_function(input_parameter):
+#     # Your Python function logic here
+#     return processed_result
 
-if __name__ == '__main__':
-    app.run(debug=True)
+# if __name__ == '__main__':
+    # app.run(debug=True)
+
+processCsv("/+17737937551.txt", "+17737937551", "output.csv")

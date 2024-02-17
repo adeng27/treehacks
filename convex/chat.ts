@@ -4,7 +4,6 @@ import openai from "./lib/openai";
 import { api } from "./_generated/api";
 import { similarInputs } from "./realMessage";
 import { ChatCompletionMessageParam } from "openai/resources/index";
-// import { ChatCompletionMessageParam } from "openai/resources/index.mjs";
 
 export const handleMessage = action({
     args: {
@@ -27,9 +26,7 @@ export const handleMessage = action({
 
         const systemMessage: ChatCompletionMessageParam = {
             role: "system",
-            content: "You are mimicking a certain person's responses to messages." + 
-                "These are some responses that this person might have responded with: " +
-                justContent.map((text) => `${text}`).join("\n\n")
+            content: "You are mimicking the user's mom's responses to messages. Text like a human. Don't add extra information. IMPORTANT: make sure you copy their tone and mannerisms. These are some responses that this person might have responded with: " + justContent.map((text) => `${text}`).join(" \n\n")
         }
 
         const pastChatMessages: ChatCompletionMessageParam[] = [];
@@ -55,13 +52,6 @@ export const handleMessage = action({
 
         const completion = await openai.chat.completions.create({
             messages: pastChatMessages,
-            // messages: [{
-            //     role: "system",
-            //     content: "You are mimicking a certain person's responses to messages." + 
-            //         "These are some responses that this person might have responded with: " +
-            //         justContent.map((text) => `${text}`).join("\n\n") + ". These responses are " +
-            //         "not perfect so use them as a guidepost."
-            // }, {role: "user", content: args.message}],
             model: "gpt-3.5-turbo"
         });
 
@@ -96,5 +86,18 @@ export const getAllEntries = query({
     handler: async (ctx) => {
         const entries = await ctx.db.query("entries").collect();
         return entries;
+    }
+})
+
+export const makeTranscript = action({
+    handler: async (ctx) => {
+        
+        const transcript = await openai.audio.transcriptions.create({
+            model: "whisper-1",
+            file: await fetch("/treehacks.wav"),
+            response_format: "text"
+        })
+        console.log(transcript);
+        return transcript.text;
     }
 })
