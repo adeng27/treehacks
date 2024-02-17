@@ -3,7 +3,8 @@ import { action, mutation, query } from "./_generated/server";
 import openai from "./lib/openai";
 import { api } from "./_generated/api";
 import { similarInputs } from "./realMessage";
-// import { ChatCompletionMessageParam } from "openai/resources/";
+import { ChatCompletionMessageParam } from "openai/resources/index";
+// import { ChatCompletionMessageParam } from "openai/resources/index.mjs";
 
 export const handleMessage = action({
     args: {
@@ -20,20 +21,47 @@ export const handleMessage = action({
             }
         }
 
-        // const systemMessage: ChatCompletionMessageParam = {
-        //     role: "system",
-        //     content: "You are mimicking a certain person's responses to messages." + 
-        //         "These are some responses that this person might have responded with: " +
-        //         justContent.map((text) => `${text}`).join("\n\n")
-        // }
+        const temp = await ctx.runQuery(api.chat.getAllEntries);
+        const chatMessages = temp.slice(-3);
+        
+
+        const systemMessage: ChatCompletionMessageParam = {
+            role: "system",
+            content: "You are mimicking a certain person's responses to messages." + 
+                "These are some responses that this person might have responded with: " +
+                justContent.map((text) => `${text}`).join("\n\n")
+        }
+
+        const pastChatMessages: ChatCompletionMessageParam[] = [];
+        for (let i = 0; i < chatMessages.length; i++) {
+            pastChatMessages.push({
+                role: "user",
+                content: chatMessages[i].input,
+            })
+            pastChatMessages.push({
+                role: "assistant",
+                content: chatMessages[i].response,
+            })
+        }
+
+        pastChatMessages.push(systemMessage);
+        pastChatMessages.push({
+            role: "user",
+            content: args.message
+        })
+
+
+        console.log(pastChatMessages);
 
         const completion = await openai.chat.completions.create({
-            messages: [{
-                role: "system",
-                content: "You are mimicking a certain person's responses to messages." + 
-                    "These are some responses that this person might have responded with: " +
-                    justContent.map((text) => `${text}`).join("\n\n")
-            }, {role: "user", content: args.message}],
+            messages: pastChatMessages,
+            // messages: [{
+            //     role: "system",
+            //     content: "You are mimicking a certain person's responses to messages." + 
+            //         "These are some responses that this person might have responded with: " +
+            //         justContent.map((text) => `${text}`).join("\n\n") + ". These responses are " +
+            //         "not perfect so use them as a guidepost."
+            // }, {role: "user", content: args.message}],
             model: "gpt-3.5-turbo"
         });
 
