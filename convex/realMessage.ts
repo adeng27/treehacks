@@ -1,6 +1,5 @@
 import { v } from "convex/values";
-import { action, internalQuery, mutation } from "./_generated/server";
-import { getEmbedding } from "./lib/openai";
+import { action, internalQuery, mutation, query } from "./_generated/server";
 import { internal, api } from "./_generated/api";
 
 export type SearchResult = {
@@ -16,7 +15,6 @@ export const handleMessageSubmit = action({
         timeStamp: v.int64(),
     },
     handler: async (ctx, args) => {
-        // const embedding = await getEmbedding(args.content);
         const embedding = await embed(args.content);
         await ctx.runMutation(api.realMessage.insertMessage, {
             fromTarget: args.fromTarget,
@@ -74,7 +72,6 @@ export const similarInputs = action({
   },
   handler: async (ctx, args) => {
     // 1. Generate an embedding from you favorite third party API:
-    // const embedding = await getEmbedding(args.input);
     const embedding = await embed(args.input);
     // 2. Then search for similar realMessages!
     const results = await ctx.vectorSearch("realMessages", "by_embedding", {
@@ -107,3 +104,18 @@ export const fetchResults = internalQuery({
       return results;
     },
   });
+
+  export const findNextFour = query({
+    args: {
+        timeStamp: v.int64(),
+    },
+    handler: async (ctx, args) => {
+        const nextFour = ctx.db
+            .query("realMessages")
+            .filter((q) => q.and(q.eq(q.field("fromTarget"), true), 
+                q.gt(q.field("timeStamp"), args.timeStamp), 
+                q.lt(q.field("timeStamp"), args.timeStamp + BigInt(5))))
+            .take(4);
+        return nextFour;
+    }
+  })

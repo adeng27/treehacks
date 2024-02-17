@@ -2,12 +2,15 @@ import { v } from "convex/values";
 import { action, mutation, query } from "./_generated/server";
 import openai from "./lib/openai";
 import { api } from "./_generated/api";
+import { similarInputs } from "./realMessage";
 
 export const handleMessage = action({
     args: {
         message: v.string(),
     },
     handler: async (ctx, args) => {
+        const similars = await similarInputs(ctx, { input: args.message });
+
         const completion = await openai.chat.completions.create({
             messages: [{role: "user", content: args.message}],
             model: "gpt-3.5-turbo"
