@@ -7,9 +7,9 @@ import { Navbar } from "./components/navbar";
 
 export default function Home() {
   const handleMessage = useAction(api.chat.handleMessage);
-  const makeTranscript = useAction(api.chat.makeTranscript);
-  const similarMessages = useAction(api.realMessage.similarInputs);
-  const insertMessages = useAction(api.realMessage.handleMessageSubmit);
+  // const makeTranscript = useAction(api.chat.makeTranscript);
+  // const similarMessages = useAction(api.realMessage.similarInputs);
+  // const insertMessages = useAction(api.realMessage.handleMessageSubmit);
   const entries = useQuery(api.chat.getAllEntries);
   const [message, setMessage] = useState("");
 
@@ -17,24 +17,29 @@ export default function Home() {
     // <main className="flex min-h-screen flex-col items-center justify-between p-24">
     <main className="h-screen w-screen">
       <Navbar />
-      <div className="h-full w-full overflow-y-scroll pb-52 bg-zinc-700">
+      <div className="h-full w-full overflow-y-scroll pb-52 bg-white">
         {entries?.map(entry => {
           return (
             <div key={entry._id}>
               {/* <p>You: {entry.input}</p> */}
-              <div className="flex items-center justify-center bg-[#444654] p-6 text-sm text-white">
-                <div className="flex w-full max-w-xl items-center justify-center space-x-4">
-                  <div className="h-8 w-8 flex-none rounded-full bg-black/50"></div>
+              <div className="flex items-center bg-[white] p-6 md:px-24 text-md text-indigo-900 font-semibold">
+                <div className="flex w-full max-w-5xl items-center justify-center space-x-4">
+                  <div className="h-8 w-8 flex items-center">
+                    <svg className="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 64 64">
+                      <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <ellipse cx="30.336" cy="12.097" rx="11.997" ry="12.097"></ellipse> <path d="M35.64,30.079H25.031c-7.021,0-12.714,5.739-12.714,12.821v17.771h36.037V42.9 C48.354,35.818,42.661,30.079,35.64,30.079z"></path> </g> </g> </g>
+                    </svg>
+                  </div>
                   <div className="w-full">{entry.input}</div>
                 </div>
               </div>
               {/* <p>AI: {entry.response}</p> */}
-              <div className="flex items-center justify-center space-x-4 bg-[#343541] p-6 px-52 text-sm text-white">
-                  <div className="flex w-full max-w-xl items-start justify-center space-x-4">
-                    <div className="h-8 w-8 flex-none rounded-full bg-black/50">
+              <div className="flex items-center space-x-4 bg-[#ffffff] p-6 md:px-24 text-md text-indigo-900 italic">
+                  <div className="flex w-full max-w-5xl items-start justify-center space-x-4">
+                    <div className="h-10 w-10 flex items-center rounded-full bg-black/50">
                       <img
-                        src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/ChatGPT_logo.svg/2048px-ChatGPT_logo.svg.png"
-                        alt="chatgpt-logo"
+                        src="/joseph.jpeg"
+                        alt="joseph bailey"
+                        className="rounded-full"
                       />
                     </div>
                     <div className="w-full">{entry.response}</div>
@@ -44,7 +49,7 @@ export default function Home() {
           )
         })}
       </div>
-      <div className="absolute bottom-0 flex w-screen flex-col items-center justify-center bg-gray-800">
+      <div className="absolute bottom-0 flex w-screen flex-col items-center justify-center bg-indigo-900">
         <form className="w-full flex justify-center" onSubmit={(e) => {
           e.preventDefault();
           handleMessage({ message });
@@ -52,7 +57,7 @@ export default function Home() {
         }}>
           <input
             name="message"
-            className="my-3 w-5/6 rounded border-none bg-[#202123] px-4 py-2 text-sm text-white shadow-xl outline-none focus:outline-1 focus:outline-white"
+            className="my-3 w-5/6 rounded border-none bg-white px-4 py-2 text-sm text-black shadow-xl outline-none focus:outline-1 focus:outline-slate-200"
             placeholder="Send a message..."
             value={message}
             onChange={(e) => setMessage(e.target.value)}
