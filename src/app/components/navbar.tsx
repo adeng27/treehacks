@@ -22,6 +22,9 @@ export const Navbar = () => {
                     <Link href="https://71b441ffeaee364e26.gradio.live/" target="_blank" className="h-8 block py-2 px-3 rounded md:border-0 md:p-0 text-white md:hover:text-blue-500 bg-none">Kate</Link>
                   </li>
                   <li>
+                    <Link href="https://f11355e2f3a16066e9.gradio.live/" target="_blank" className="h-8 block py-2 px-3 rounded md:border-0 md:p-0 text-white md:hover:text-blue-500 bg-none">Dumbledore</Link>
+                  </li>
+                  <li>
                     <Link href="https://cf5eabca5f7bdd1c56.gradio.live/" target="_blank" className="h-8 block py-2 px-3 rounded md:border-0 md:p-0 text-white md:hover:text-blue-500 bg-none">Alastair</Link>
                   </li>
                 </ul>
