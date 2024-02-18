@@ -1,53 +1,48 @@
 "use client"
 
-import { useAction, useQuery } from "convex/react";
-import { useState } from "react";
-import { api } from "../../../convex/_generated/api";
+import { SetStateAction, useState } from "react";
+import Link from 'next/link';
+import './test.css'
 
-export default function Test() {
-  const handleMessage = useAction(api.chat.handleMessage);
-  const similarMessages = useAction(api.realMessage.similarInputs);
-  const insertMessages = useAction(api.realMessage.handleMessageSubmit);
-  const entries = useQuery(api.chat.getAllEntries);
-  const [message, setMessage] = useState("");
+const Test = () => {
+  const [activeTab, setActiveTab] = useState('text');
 
-  const runPythonFunction = async () => {
-    const response = await fetch('/run-python-function', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ text_content: 'Your text content here' })
-    });
-
-    const data = await response.json();
-    const filename = data.csv_filename;
-
-    // Download the generated CSV file
-    const downloadUrl = `/download-csv/${encodeURIComponent(filename)}`;
-    window.open(downloadUrl); // or use other methods to download the file
+  const handleTabChange = (tab: SetStateAction<string>) => {
+    setActiveTab(tab);
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      
-      <button onClick={runPythonFunction}>TEST</button>
-      {/* <button onClick={async () => {
-        const messages = await similarMessages({input: "What is your least favorite color?"});
-        console.log(messages);
-      }}>
-        CLICK ME IF YOU DARE
-      </button> */}
-      {/* <button onClick={async () => {
-        insertMessages({ fromTarget: false, content: "0", timeStamp: BigInt(0)})
-        insertMessages({ fromTarget: true, content: "1", timeStamp: BigInt(1)})
-        insertMessages({ fromTarget: false, content: "2", timeStamp: BigInt(2)})
-        insertMessages({ fromTarget: true, content: "3", timeStamp: BigInt(3)})
-        insertMessages({ fromTarget: true, content: "4", timeStamp: BigInt(4)})
-        insertMessages({ fromTarget: true, content: "5", timeStamp: BigInt(5)})
-      }}>
-        INSERT MESSAGE
-      </button> */}
-    </main>
+    <div>
+      <div className="tab-container">
+        <div
+          className={`tab ${activeTab === 'text' ? 'active' : ''}`}
+          onClick={() => handleTabChange('text')}
+        >
+          Text
+        </div>
+        <Link href="/ ">
+          <img src="/logo.png" alt="Logo" className="logo" />
+        </Link>
+        <div
+          className={`tab ${activeTab === 'speak' ? 'active' : ''}`}
+          onClick={() => handleTabChange('speak')}
+        >
+          Speak
+        </div>
+      </div>
+      <div className="tab-content">
+        {activeTab === 'text' && <input type="text"  className="text-input" placeholder="Ask Joseph Something..."></input>}
+        {activeTab === 'speak' && <input type="text" className="text-input" placeholder="Ask Joseph Something..."></input>}
+      </div>
+      <div className="copyright">
+        &copy; 2023 ReVision. All rights reserved.
+      </div>
+      <div className="copyright">
+        &copy; 2023 ReVision. All rights reserved.
+      </div>
+    </div>
   );
-}
+};
+
+
+export default Test;
