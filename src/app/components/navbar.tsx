@@ -21,9 +21,9 @@ export const Navbar = () => {
                   <li>
                     <Link href="#" className="h-8 block py-2 px-3 rounded md:border-0 md:p-0 text-white md:hover:text-blue-500 bg-none">Kate</Link>
                   </li>
-                  <li>
+                  {/* <li>
                     <Link href="#" className="h-8 block py-2 px-3 rounded md:border-0 md:p-0 text-white md:hover:text-blue-500 bg-none">Obama</Link>
-                  </li>
+                  </li> */}
                   <li>
                     <Link href="#" className="h-8 block py-2 px-3 rounded md:border-0 md:p-0 text-white md:hover:text-blue-500 bg-none">Alastair</Link>
                   </li>
