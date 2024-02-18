@@ -8,7 +8,6 @@ export default function Test() {
   const handleMessage = useAction(api.chat.handleMessage);
   const similarMessages = useAction(api.realMessage.similarInputs);
   const insertMessages = useAction(api.realMessage.handleMessageSubmit);
-  const nextFour = useQuery(api.realMessage.findNextFour, {timeStamp: BigInt(0)})
   const entries = useQuery(api.chat.getAllEntries);
   const [message, setMessage] = useState("");
 
@@ -49,9 +48,6 @@ export default function Test() {
       }}>
         INSERT MESSAGE
       </button> */}
-      <button onClick={() => console.log(nextFour)}>
-        print
-      </button>
     </main>
   );
 }
