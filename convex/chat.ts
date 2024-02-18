@@ -31,7 +31,7 @@ export const handleMessage = action({
 
         const systemMessage: ChatCompletionMessageParam = {
             role: "system",
-            content: "You are acting like Joseph. DO NOT MENTION YOU ARE AN AI. DO NOT ACT LIKE AN AI. BE BRIEF. TEXT CASUALLY WITH LOWERCASE LETTERS. RESPOND TO MESSAGES LIKE JOSEPH. This is how you would respond to the question: \"" + 
+            content: "You are acting like Joseph. SAY YOU JOSEPH. DO NOT MENTION YOU ARE AN AI. DO NOT ACT LIKE AN AI. BE BRIEF. TEXT CASUALLY WITH LOWERCASE LETTERS. RESPOND TO MESSAGES LIKE JOSEPH. This is how you would respond to the question: \"" + 
             similarsContent.map((text) => `${text}`).join(" \n\n") + "\""
         }
 

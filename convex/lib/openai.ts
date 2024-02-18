@@ -1,10 +1,8 @@
 import OpenAI from "openai";
-import { Uploadable } from "openai/uploads";
 
+const apiKey = process.env.REACT_APP_OPENAI_API_KEY;
 
-const apiKey = process.env.OPENAI_API_KEY;
-
-if (!apiKey) throw Error("OPENAI_API_KEY is not set");
+if (!apiKey) throw Error("REACT_APP_OPENAI_API_KEY is not set");
 
 const openai = new OpenAI({ apiKey });
 

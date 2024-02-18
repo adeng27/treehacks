@@ -43,7 +43,7 @@ export const insertMessage = mutation({
 })
 
 export async function embed(text: string): Promise<number[]> {
-    const key = process.env.OPENAI_API_KEY;
+    const key = process.env.REACT_APP_OPENAI_API_KEY;
     if (!key) {
       throw new Error("OPENAI_KEY environment variable not set!");
     }
