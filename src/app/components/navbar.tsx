@@ -19,13 +19,10 @@ export const Navbar = () => {
                     <Link href="https://aff28f0aeb6d275968.gradio.live/" target="_blank" className="h-8 block py-2 px-3 rounded md:border-0 md:p-0 text-white md:hover:text-blue-500 bg-none">Joseph</Link>
                   </li>
                   <li>
-                    <Link href="#" target="_blank" className="h-8 block py-2 px-3 rounded md:border-0 md:p-0 text-white md:hover:text-blue-500 bg-none">Kate</Link>
+                    <Link href="https://71b441ffeaee364e26.gradio.live/" target="_blank" className="h-8 block py-2 px-3 rounded md:border-0 md:p-0 text-white md:hover:text-blue-500 bg-none">Kate</Link>
                   </li>
-                  {/* <li>
-                    <Link href="#" className="h-8 block py-2 px-3 rounded md:border-0 md:p-0 text-white md:hover:text-blue-500 bg-none">Obama</Link>
-                  </li> */}
                   <li>
-                    <Link href="#" target="_blank" className="h-8 block py-2 px-3 rounded md:border-0 md:p-0 text-white md:hover:text-blue-500 bg-none">Alastair</Link>
+                    <Link href="https://cf5eabca5f7bdd1c56.gradio.live/" target="_blank" className="h-8 block py-2 px-3 rounded md:border-0 md:p-0 text-white md:hover:text-blue-500 bg-none">Alastair</Link>
                   </li>
                 </ul>
               </div>

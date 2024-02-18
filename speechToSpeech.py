@@ -112,11 +112,6 @@ def transcribe(audio):
     with open(output_filename, "wb") as output:
         output.write(r.content)
 
-    # headers = {
-    #     "xi-api-key": "3766024a57a6eb25723a2eec16fae7c5",
-    #     "Content-Type": "application/json"
-    # }
-
     # response = requests.request("POST", url, json=payload, headers=headers, params=querystring)
     mixer.init()
     mixer.music.load("reply.mp3")
