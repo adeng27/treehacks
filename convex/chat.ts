@@ -11,14 +11,19 @@ export const handleMessage = action({
     },
     handler: async (ctx, args) => {
         const similars = await similarInputs(ctx, { input: args.message });
-
-        const justContent: string[] = [];
+        const similarsContent: string[] = [];
         for (let i = 0; i < similars.length; i++) {
-            const daContent = await ctx.runQuery(api.realMessage.findNextFour, {timeStamp: similars[0].timeStamp});
-            for (let j = 0; j < daContent.length; j++) {
-                justContent.push(daContent[j].content)
-            }
+            similarsContent.push(similars[i].content);
         }
+        console.log("similars", similarsContent)
+
+        // const justContent: string[] = [];
+        // for (let i = 0; i < similars.length; i++) {
+        //     const daContent = await ctx.runQuery(api.realMessage.findNextFour, {timeStamp: similars[0].timeStamp});
+        //     for (let j = 0; j < daContent.length; j++) {
+        //         justContent.push(daContent[j].content)
+        //     }
+        // }
 
         const temp = await ctx.runQuery(api.chat.getAllEntries);
         const chatMessages = temp.slice(-3);
@@ -26,10 +31,12 @@ export const handleMessage = action({
 
         const systemMessage: ChatCompletionMessageParam = {
             role: "system",
-            content: "You are mimicking the user's mom's responses to messages. Text like a human. Don't add extra information. IMPORTANT: make sure you copy their tone and mannerisms. These are some responses that this person might have responded with: " + justContent.map((text) => `${text}`).join(" \n\n")
+            content: "You are Joseph. DO NOT MENTION YOU ARE AN AI. STAY CONSISTENT WITH CONVERSATION AND PREVIOUS MESSAGES. TEXT WITH SLANG AND ACRONYMS AND WITH LOWERCASE LETTERS. RESPOND TO MESSAGES LIKE JOSEPH. This is how they would respond to the question: \"" + 
+            similarsContent.map((text) => `${text}`).join(" \n\n") + "\""
         }
 
         const pastChatMessages: ChatCompletionMessageParam[] = [];
+
         for (let i = 0; i < chatMessages.length; i++) {
             pastChatMessages.push({
                 role: "user",
@@ -41,12 +48,11 @@ export const handleMessage = action({
             })
         }
 
-        pastChatMessages.push(systemMessage);
         pastChatMessages.push({
             role: "user",
             content: args.message
         })
-
+        pastChatMessages.push(systemMessage);
 
         console.log(pastChatMessages);
 

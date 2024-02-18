@@ -48,9 +48,6 @@ export default function Home() {
       }}>
         INSERT MESSAGE
       </button> */}
-      <button onClick={() => makeTranscript()}>
-        idmeifne
-      </button>
     </main>
   );
 }

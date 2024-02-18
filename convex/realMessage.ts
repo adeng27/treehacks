@@ -77,7 +77,7 @@ export const similarInputs = action({
     const results = await ctx.vectorSearch("realMessages", "by_embedding", {
       vector: embedding,
       limit: 16,
-      filter: (q) => q.eq("fromTarget", false),
+      filter: (q) => q.eq("fromTarget", true),
     });
 
     const messages: SearchResult[] = await ctx.runQuery(
@@ -105,17 +105,17 @@ export const fetchResults = internalQuery({
     },
   });
 
-  export const findNextFour = query({
-    args: {
-        timeStamp: v.int64(),
-    },
-    handler: async (ctx, args) => {
-        const nextFour = ctx.db
-            .query("realMessages")
-            .filter((q) => q.and(q.eq(q.field("fromTarget"), true), 
-                q.gt(q.field("timeStamp"), args.timeStamp), 
-                q.lt(q.field("timeStamp"), args.timeStamp + BigInt(5))))
-            .take(4);
-        return nextFour;
-    }
-  })
+//   export const findNextFour = query({
+//     args: {
+//         timeStamp: v.int64(),
+//     },
+//     handler: async (ctx, args) => {
+//         const nextFour = ctx.db
+//             .query("realMessages")
+//             .filter((q) => q.and(q.eq(q.field("fromTarget"), true), 
+//                 q.gt(q.field("timeStamp"), args.timeStamp), 
+//                 q.lt(q.field("timeStamp"), args.timeStamp + BigInt(5))))
+//             .take(4);
+//         return nextFour;
+//     }
+//   })
