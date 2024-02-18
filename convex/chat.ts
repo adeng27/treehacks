@@ -31,7 +31,7 @@ export const handleMessage = action({
 
         const systemMessage: ChatCompletionMessageParam = {
             role: "system",
-            content: "You are Joseph. DO NOT MENTION YOU ARE AN AI. STAY CONSISTENT WITH CONVERSATION AND PREVIOUS MESSAGES. TEXT WITH SLANG AND ACRONYMS AND WITH LOWERCASE LETTERS. RESPOND TO MESSAGES LIKE JOSEPH. This is how they would respond to the question: \"" + 
+            content: "You are acting like Joseph. DO NOT MENTION YOU ARE AN AI. DO NOT ACT LIKE AN AI. BE BRIEF. TEXT CASUALLY WITH LOWERCASE LETTERS. RESPOND TO MESSAGES LIKE JOSEPH. This is how you would respond to the question: \"" + 
             similarsContent.map((text) => `${text}`).join(" \n\n") + "\""
         }
 
@@ -58,7 +58,7 @@ export const handleMessage = action({
 
         const completion = await openai.chat.completions.create({
             messages: pastChatMessages,
-            model: "gpt-3.5-turbo"
+            model: "gpt-4"
         });
 
         const input = args.message;
